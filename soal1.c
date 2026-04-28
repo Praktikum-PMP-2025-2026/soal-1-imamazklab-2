@@ -59,20 +59,21 @@ void display(Container *l, int N) {
             continue;
         }
         if (pagit && !siangt) {
-            printf("SIANG ");
-            if (strcmp(l[i].shift, "SIANG") != 0 && strcmp(l[i].shift, "MALAM") == 0) {
+            if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") != 0 && strcmp(l[i].shift, "MALAM") == 0) {
+                printf("SIANG ");
                 printf("-\n");
                 siangt = 1;
             }
-            else {
+            else if (strcmp(l[i].shift, "SIANG") == 0){
+                printf("SIANG ");
                 printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
                 siangt = 1;
             }
             continue;
         }
         if (pagit && siangt && !malamt) {
-            printf("MALAM ");
-            if (strcmp(l[i].shift, "MALAM") == 1) {
+            if (strcmp(l[i].shift, "MALAM") == 0) {
+                printf("MALAM ");
                 printf("%s %d %d", l[i].nama, l[i].id, l[i].skor);
                 malamt = 1;
             }
@@ -80,6 +81,7 @@ void display(Container *l, int N) {
     }
 
     if (!malamt) {
+        printf("MALAM ");
         printf("-");
     }
 }
