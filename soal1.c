@@ -139,9 +139,9 @@ int main() {
     // }
     sorting(myData, N);
 
-    for (int i = 0; i < N; i++) {
-        printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
-    }
+    // for (int i = 0; i < N; i++) {
+    //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
+    // }
     display(myData, N);
 
     free(myData);
