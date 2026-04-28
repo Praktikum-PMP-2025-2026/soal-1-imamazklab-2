@@ -18,21 +18,9 @@ void getInput(Container *l, int N) {
 void sorting(Container *l, int N) {
     for (int i = 0; i < N - 1; i++) {
         for (int j = 0; j < N - 1; j++) {
-            if (strcmp(l[i + 1].shift, "PAGI") == 0 && strcmp(l[i].shift, "SIANG") == 0 ||
-                strcmp(l[i + 1].shift, "PAGI") == 0 && strcmp(l[i].shift, "MALAM") == 0 ||
-                strcmp(l[i + 1].shift, "SIANG") == 0 && strcmp(l[i].shift, "MALAM") == 0
-            ) {
-                Container temp = l[i];
-                l[i] = l[i + 1];
-                l[i + 1] = temp;
-            }
-        }
-    }
-    for (int i = 0; i < N - 1; i++) {
-        for (int j = 0; j < N - 1; j++) {
-            if (strcmp(l[i].shift, l[i + 1].shift) == 0 && l[i].skor < l[i + 1].skor ||
-                strcmp(l[i].shift, l[i + 1].shift) == 0 && l[i].skor == l[i + 1].skor && l[i].id > l[i + 1].id ||
-                strcmp(l[i].shift, l[i + 1].shift) == 0 && l[i].skor == l[i + 1].skor && l[i].id == l[i + 1].id && strcmp(l[i].nama, l[i + 1].nama) > 0
+            if (l[i].skor < l[i + 1].skor ||
+                l[i].skor == l[i + 1].skor && l[i].id > l[i + 1].id ||
+                l[i].skor == l[i + 1].skor && l[i].id == l[i + 1].id && strcmp(l[i].nama, l[i + 1].nama) > 0
             ) {
                 Container temp = l[i];
                 l[i] = l[i + 1];
@@ -42,107 +30,75 @@ void sorting(Container *l, int N) {
     }
 }
 
-void display(Container *l, int N) {
-    int pagi = 0, siang = 0, malam = 0;
-    int pagit = 0, siangt = 0, malamt = 0;
+void separate(Container *l, Container *pagi, int *idxpagi, Container *siang, int *idxsiang, Container *malam, int *idxmalam, int N) {
+    *idxpagi = 0;
+    *idxsiang = 0;
+    *idxmalam = 0;
     for (int i = 0; i < N; i++) {
-        if (strcmp(l[i].shift, "PAGI") == 0) pagi++;
-        if (strcmp(l[i].shift, "SIANG") == 0) siang++;
-        if (strcmp(l[i].shift, "MALAM") == 0) malam++;
-    }
-    for (int i = 0; i < N; i++) {
-        if (!pagi && !pagit) {
-            printf("PAGI ");
-            printf("-\n");
-            pagit = 1;
+        if (strcmp(l[i].shift, "PAGI") == 0) {
+            pagi[*idxpagi] = l[i];
+            *idxpagi = *idxpagi + 1;
         }
-        if (pagi && !pagit) {
-            printf("PAGI ");
-            printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-            pagit = 1;
+        if (strcmp(l[i].shift, "SIANG") == 0) {
+            siang[*idxsiang] = l[i];
+            *idxsiang = *idxsiang + 1;
         }
-
-        if (pagit && !siang && !siangt) {
-            printf("SIANG ");
-            printf("-\n");
-            siangt = 1;
-        }
-        if (pagit && siang && !siangt && strcmp(l[i].shift, "SIANG") == 0) {
-            printf("SIANG ");
-            printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-            siangt = 1;
-        }
-
-        if (siangt && !malam && !malamt) {
-            printf("MALAM ");
-            printf("-");
-            malamt = 1;
-            break;
-        }
-        if (siangt && malam && !malamt && strcmp(l[i].shift, "MALAM") == 0) {
-            printf("MALAM ");
-            printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-            malamt = 1;
-            break;
+        if (strcmp(l[i].shift, "MALAM") == 0) {
+            malam[*idxmalam] = l[i];
+            *idxmalam = *idxmalam + 1;
         }
     }
+}
 
-    // for (int i = 0; i < N; i++) {
-    //     if (!pagit) {
-    //         printf("PAGI ");
-    //         if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") == 0) {
-    //             printf("-\n");
-    //             pagit = 1;
-    //         }
-    //         else {
-    //             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-    //             pagit = 1;
-    //         }
-    //         continue;
-    //     }
-    //     if (pagit && !siangt) {
-    //         if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") != 0 && strcmp(l[i].shift, "MALAM") == 0) {
-    //             printf("SIANG ");
-    //             printf("-\n");
-    //             siangt = 1;
-    //         }
-    //         else if (strcmp(l[i].shift, "SIANG") == 0){
-    //             printf("SIANG ");
-    //             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-    //             siangt = 1;
-    //         }
-    //         continue;
-    //     }
-    //     if (pagit && siangt && !malamt) {
-    //         if (strcmp(l[i].shift, "MALAM") == 0) {
-    //             printf("MALAM ");
-    //             printf("%s %d %d", l[i].nama, l[i].id, l[i].skor);
-    //             malamt = 1;
-    //         }
-    //     }
-    // }
+void display(Container *pagi, int idxpagi, Container *siang, int idxsiang, Container *malam, int idxmalam) {
+    if (idxpagi) {
+        printf("PAGI ");
+        printf("%s %d %d\n", pagi[0].nama, pagi[0].id, pagi[0].skor);
+    } else {
+        printf("PAGI ");
+        printf("-\n");
+    }
 
-    // if (!malamt) {
-    //     printf("MALAM ");
-    //     printf("-");
-    // }
+    if (idxsiang) {
+        printf("SIANG ");
+        printf("%s %d %d\n", siang[0].nama, siang[0].id, siang[0].skor);
+    } else {
+        printf("SIANG ");
+        printf("-\n");
+    }
+
+    if (idxmalam) {
+        printf("MALAM ");
+        printf("%s %d %d", malam[0].nama, malam[0].id, malam[0].skor);
+    } else {
+        printf("MALAM ");
+        printf("-");
+    }
 }
 
 int main() {
     int N = 0;
+    int idxpagi = 0, idxsiang = 0, idxmalam = 0;
     scanf("%d", &N);
 
     Container *myData = (Container*) malloc(N * sizeof(Container));
+    Container *myDataPagi = (Container*) malloc(N * sizeof(Container));
+    Container *myDataSiang = (Container*) malloc(N * sizeof(Container));
+    Container *myDataMalam = (Container*) malloc(N * sizeof(Container));
+
     getInput(myData, N);
     // for (int i = 0; i < N; i++) {
     //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
     // }
-    sorting(myData, N);
+    separate(myData, myDataPagi, &idxpagi, myDataSiang, &idxsiang, myDataMalam, &idxmalam, N);
+    sorting(myDataPagi, idxpagi);
+    sorting(myDataSiang, idxsiang);
+    sorting(myDataMalam, idxmalam);
 
     // for (int i = 0; i < N; i++) {
     //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
     // }
-    display(myData, N);
+    display(myDataPagi, idxpagi, myDataSiang, idxsiang, myDataMalam, idxmalam);
 
     free(myData);
 }
