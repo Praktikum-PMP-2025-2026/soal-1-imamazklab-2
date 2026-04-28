@@ -96,4 +96,6 @@ int main() {
     display(myDataPagi, idxpagi, myDataSiang, idxsiang, myDataMalam, idxmalam);
 
     free(myData);
+
+    return 0;
 }
