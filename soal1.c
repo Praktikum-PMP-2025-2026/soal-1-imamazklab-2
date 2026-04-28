@@ -56,30 +56,30 @@ void display(Container *l, int N) {
             printf("-\n");
             pagit = 1;
         }
-        else if (pagi && !pagit) {
+        if (pagi && !pagit) {
             printf("PAGI ");
             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
             pagit = 1;
         }
 
-        if (!siang && !siangt) {
+        if (pagit && !siang && !siangt) {
             printf("SIANG ");
             printf("-\n");
             siangt = 1;
         }
-        else if (siang && !siangt && strcmp(l[i].shift, "SIANG") == 0) {
+        if (pagit && siang && !siangt && strcmp(l[i].shift, "SIANG") == 0) {
             printf("SIANG ");
             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
             siangt = 1;
         }
 
-        if (!malam && !malamt) {
+        if (siangt && !malam && !malamt) {
             printf("MALAM ");
             printf("-");
             malamt = 1;
             break;
         }
-        else if (malam && !malamt && strcmp(l[i].shift, "MALAM") == 0) {
+        if (siangt && malam && !malamt && strcmp(l[i].shift, "MALAM") == 0) {
             printf("MALAM ");
             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
             malamt = 1;
@@ -139,9 +139,9 @@ int main() {
     // }
     sorting(myData, N);
 
-    // for (int i = 0; i < N; i++) {
-    //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
-    // }
+    for (int i = 0; i < N; i++) {
+        printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
+    }
     display(myData, N);
 
     free(myData);
