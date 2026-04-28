@@ -16,8 +16,8 @@ void getInput(Container *l, int N) {
 }
 
 void sorting(Container *l, int N) {
-    for (int i = 0; i < N - 1; i++) {
-        for (int j = 0; j < N - 1; j++) {
+    for (int j = 0; j < N - 1; j++) {
+        for (int i = 0; i < N - 1; i++) {
             if (l[i].skor < l[i + 1].skor ||
                 l[i].skor == l[i + 1].skor && l[i].id > l[i + 1].id ||
                 l[i].skor == l[i + 1].skor && l[i].id == l[i + 1].id && strcmp(l[i].nama, l[i + 1].nama) > 0
@@ -87,17 +87,12 @@ int main() {
     Container *myDataMalam = (Container*) malloc(N * sizeof(Container));
 
     getInput(myData, N);
-    // for (int i = 0; i < N; i++) {
-    //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
-    // }
+
     separate(myData, myDataPagi, &idxpagi, myDataSiang, &idxsiang, myDataMalam, &idxmalam, N);
     sorting(myDataPagi, idxpagi);
     sorting(myDataSiang, idxsiang);
     sorting(myDataMalam, idxmalam);
 
-    // for (int i = 0; i < N; i++) {
-    //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
-    // }
     display(myDataPagi, idxpagi, myDataSiang, idxsiang, myDataMalam, idxmalam);
 
     free(myData);
