@@ -90,9 +90,9 @@ int main() {
 
     Container *myData = (Container*) malloc(N * sizeof(Container));
     getInput(myData, N);
-    for (int i = 0; i < N; i++) {
-        printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
-    }
+    // for (int i = 0; i < N; i++) {
+    //     printf("%s %d %s %d\n", myData[i].nama, myData[i].id, myData[i].shift, myData[i].skor);
+    // }
     sorting(myData, N);
 
     // for (int i = 0; i < N; i++) {
