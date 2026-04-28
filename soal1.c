@@ -46,44 +46,90 @@ void display(Container *l, int N) {
     int pagi = 0, siang = 0, malam = 0;
     int pagit = 0, siangt = 0, malamt = 0;
     for (int i = 0; i < N; i++) {
-        if (!pagit) {
+        if (strcmp(l[i].shift, "PAGI") == 0) pagi++;
+        if (strcmp(l[i].shift, "SIANG") == 0) siang++;
+        if (strcmp(l[i].shift, "MALAM") == 0) malam++;
+    }
+    for (int i = 0; i < N; i++) {
+        if (!pagi && !pagit) {
             printf("PAGI ");
-            if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") == 0) {
-                printf("-\n");
-                pagit = 1;
-            }
-            else {
-                printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-                pagit = 1;
-            }
+            printf("-\n");
+            pagit = 1;
             continue;
         }
-        if (pagit && !siangt) {
-            if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") != 0 && strcmp(l[i].shift, "MALAM") == 0) {
-                printf("SIANG ");
-                printf("-\n");
-                siangt = 1;
-            }
-            else if (strcmp(l[i].shift, "SIANG") == 0){
-                printf("SIANG ");
-                printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
-                siangt = 1;
-            }
+        else if (pagi && !pagit) {
+            printf("PAGI ");
+            printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
+            pagit = 1;
             continue;
         }
-        if (pagit && siangt && !malamt) {
-            if (strcmp(l[i].shift, "MALAM") == 0) {
-                printf("MALAM ");
-                printf("%s %d %d", l[i].nama, l[i].id, l[i].skor);
-                malamt = 1;
-            }
+
+        if (!siang && !siangt) {
+            printf("SIANG ");
+            printf("-\n");
+            siangt = 1;
+            continue;
+        }
+        else if (siang && !siangt && strcmp(l[i].shift, "SIANG") == 0) {
+            printf("SIANG ");
+            printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
+            siangt = 1;
+            continue;
+        }
+
+        if (!malam && !malamt) {
+            printf("MALAM ");
+            printf("-");
+            malamt = 1;
+            break;
+        }
+        else if (malam && !malamt && strcmp(l[i].shift, "MALAM") == 0) {
+            printf("MALAM ");
+            printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
+            malamt = 1;
+            continue;
         }
     }
 
-    if (!malamt) {
-        printf("MALAM ");
-        printf("-");
-    }
+    // for (int i = 0; i < N; i++) {
+    //     if (!pagit) {
+    //         printf("PAGI ");
+    //         if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") == 0) {
+    //             printf("-\n");
+    //             pagit = 1;
+    //         }
+    //         else {
+    //             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
+    //             pagit = 1;
+    //         }
+    //         continue;
+    //     }
+    //     if (pagit && !siangt) {
+    //         if (strcmp(l[i].shift, "PAGI") != 0 && strcmp(l[i].shift, "SIANG") != 0 && strcmp(l[i].shift, "MALAM") == 0) {
+    //             printf("SIANG ");
+    //             printf("-\n");
+    //             siangt = 1;
+    //         }
+    //         else if (strcmp(l[i].shift, "SIANG") == 0){
+    //             printf("SIANG ");
+    //             printf("%s %d %d\n", l[i].nama, l[i].id, l[i].skor);
+    //             siangt = 1;
+    //         }
+    //         continue;
+    //     }
+    //     if (pagit && siangt && !malamt) {
+    //         if (strcmp(l[i].shift, "MALAM") == 0) {
+    //             printf("MALAM ");
+    //             printf("%s %d %d", l[i].nama, l[i].id, l[i].skor);
+    //             malamt = 1;
+    //         }
+    //     }
+    // }
+
+    // if (!malamt) {
+    //     printf("MALAM ");
+    //     printf("-");
+    // }
 }
 
 int main() {
